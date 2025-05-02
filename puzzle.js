@@ -2,97 +2,98 @@
 
 //Usado?: YES
   const middlewares = require('./middlewares');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS requerimos dentro de app.js las constantes validarPalabraMiddleware, verificarSesionMiddleware, setupAPP,
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const bodyParser = require('body-parser');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS parsemaos los datos introducidos por el usuario dentro del formulario
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const session = require('express-session');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS requerimos a express sessions su configuración
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: 
 const express = require('express');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS requerimos la configuración de express
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: 
 const bodyParser = require('body-parser');
-//--- Explicación: MIDDLEWARES.JS
+//--- Explicación: MIDDLEWARES.JS parsemaos los datos introducidos por el usuario dentro del formulario
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const session = require('express-session');
-//--- Explicación: MIDDLEWARES.JS
+//--- Explicación: MIDDLEWARES.JS requerimos a express sessions su configuración
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const dotenv = require('dotenv');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS requerimos la contraseña configurada
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const middlewares = require('./middlewares');
-//--- Explicación: ROUTES.JS
+//--- Explicación: ROUTES.JS  requerimos dentro de app.js las constantes validarPalabraMiddleware, verificarSesionMiddleware, setupAPP,
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const routes = require('./routes');
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS requerimos la cosntante setup
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 dotenv.config();
-//--- Explicación: MIDDLEWARE.JS
+//--- Explicación: MIDDLEWARE.JS obentemos el valor de la contraseña que vamos a comparar
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const app = express();
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS ejecutamos el servidor express
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const PORT = 4000;
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS constante de configuración del puerto
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 const dotenv = require('dotenv');
-//--- Explicación: MIDDLEWARE.JS
+//--- Explicación: MIDDLEWARE.JS requerimos la contraseña configurada
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 dotenv.config();
-//--- Explicación: MIDDLWARES.JS
+//--- Explicación: MIDDLWARES.JS obentemos el valor de la contraseña que vamos a comparar
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 middlewares.setupApp(app);
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS ejecutamos a los datos almacenados dentro del middleware en concreto a la variable
+//setAPP que continen la función app para que se ejecute viene predeficina con una contraseña incorrecta.
 
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 routes.setup(app);
-//--- Explicación: APP.JS
+//--- Explicación: APP.JS ejecutamos el setup de routes para que se ejecute la función para comparar si es correcta la clave
 
 // -------------------------------------------------------------------------------------
 
@@ -107,9 +108,10 @@ const validarPalabraMiddleware = (req, res, next) => {
     res.redirect('/?error=1');
   }
 };
-//--- Explicación: MIDDLEWARES.JS
-
-
+//--- Explicación: MIDDLEWARES.JS 
+/* Comparación de la clave secreta y la aportada por el usuario si es correta pasa al siguiente estado
+  Si no es correcta emite un error del tipo 1
+*/
 // -------------------------------------------------------------------------------------
 
 
@@ -125,8 +127,9 @@ const setup = (app) => {
   //Aquí va código dentro
 })}
 //--- Explicación: ROUTES.JS
-
-
+/* Comprueba si la palabra introducida es correcta o no, si es correcta pasa al perfil de usuario
+   Si no es correcta pide nuevamente la contraseña
+*/
 // -------------------------------------------------------------------------------------
 
 
@@ -145,8 +148,7 @@ res.send(`
   </html>
 `);
 //--- Explicación: ROUTES.JS
-
-
+/* Visualización de la página de inicio mostrando el mensaje de error al introducer la contraseña*/
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -159,7 +161,9 @@ const setupAPP = (app) => {
   }));
 };
 //--- Explicación: MIDDLEWARES.JS
-
+/*  se codifican los datos de la url
+    no se salva la sesión para un futuro.
+*/
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -172,14 +176,15 @@ app.post('/profile', middlewares.validarPalabraMiddleware, (req, res) => {
   `);
 });
 //--- Explicación: APP.JS
-
+/* Perfil del usuario  
+*/
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //--- Explicación: APP.JS
-
+// ejecutamso el uso del parse adherido al body codificando los datos
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -190,7 +195,8 @@ app.use(session({
 }));
 
 //--- Explicación: APP.JS
-
+// se codifican los datos de la url
+// no se salva la sesión para un futuro.
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -198,7 +204,7 @@ app.listen(PORT, () => {
   console.log(`Servidor en ejecución en http://localhost:${PORT}`);
 });
 //--- Explicación: APP.JS
-
+// escuchamos el puerto de salida del servidor para comprobar el funcionamiento de este
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -210,7 +216,7 @@ const verificarSesionMiddleware = (req, res, next) => {
   }
 };
 //--- Explicación: MIDDLEWARES.JS
-
+// si la palabra secreeta es correcta devulve true y por tanto continúa con la ejecución sino devuelve un error
 // -------------------------------------------------------------------------------------
 
 
@@ -224,7 +230,7 @@ app.get('/profile', middlewares.verificarSesionMiddleware, (req, res) => {
   `);
 });
 //--- Explicación: APP.JS
-
+// obtiene los datos para la ruta del perfil con su HTML
 // -------------------------------------------------------------------------------------
 
 
@@ -238,7 +244,7 @@ app.post('/logout', (req, res) => {
   });
 });
 //--- Explicación: APP.JS
-
+// Devolución de un error producido al cerrar la sesión
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -246,7 +252,7 @@ module.exports = {
   setup,
 };
 //--- Explicación: ROUTES.JS
-
+// exportación de los datos del routes.js
 // -------------------------------------------------------------------------------------
 
 //Usado?: YES
@@ -256,6 +262,6 @@ module.exports = {
   setupAPP,
 };
 //--- Explicación: MIDDLEWARES.JS
-
+// exportación de los datos del middlewares.js
 // -------------------------------------------------------------------------------------
 
